@@ -48,14 +48,14 @@ const Rotas = () =>{
                 options={{headerShown: false}}
             />
             <Stack.Screen
-            name="Profile"
-            component={Profile}
-            options={{headerShown: false}}
+                name="Profile"
+                component={Profile}
+                options={{headerShown: false}}
             />
             <Stack.Screen
-            name="Carrinho"
-            component={Carrinho}
-            options={{headerShown: false}}
+                name="Carrinho"
+                component={Carrinho}
+                options={{headerShown: false}}
             />
 
         </Stack.Navigator>

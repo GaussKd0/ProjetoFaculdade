@@ -1,46 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Carrinho = ({ route }) => {
+const Carrinho = ({ route, navigation }) => {
   const { imageArray, dinheiroArray } = route.params;
-  const [totalDinheiro, setTotalDinheiro] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    if (dinheiroArray) {
-      const initialSum = dinheiroArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-      setTotalDinheiro(initialSum);
+    if (imageArray && dinheiroArray) {
+      const items = imageArray.map((image, index) => ({
+        image,
+        dinheiro: dinheiroArray[index]
+      }));
+      setCartItems(items);
     }
-  }, [dinheiroArray]);
+  }, [imageArray, dinheiroArray]);
 
-  const handleDelete = (index) => {
-    const updatedImageArray = [...imageArray];
-    const updatedDinheiroArray = [...dinheiroArray];
+  const deleteItem = async (index) => {
+    try {
+      const updatedItems = [...cartItems];
+      updatedItems.splice(index, 1);
 
-    updatedImageArray.splice(index, 1);
-    updatedDinheiroArray.splice(index, 1);
+      const updatedImageArray = updatedItems.map(item => item.image);
+      const updatedDinheiroArray = updatedItems.map(item => item.dinheiro);
 
-    setTotalDinheiro(updatedDinheiroArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0));
-    route.params = { imageArray: updatedImageArray, dinheiroArray: updatedDinheiroArray };
+      await AsyncStorage.setItem('imageArray', JSON.stringify(updatedImageArray));
+      await AsyncStorage.setItem('dinheiroArray', JSON.stringify(updatedDinheiroArray));
+
+      setCartItems(updatedItems);
+    } catch (error) {
+      console.error('Erro ao deletar o item:', error);
+    }
+  };
+
+  const calculateTotal = () => {
+    if (cartItems.length > 0) {
+      return cartItems.reduce((total, item) => total + item.dinheiro, 0);
+    } else {
+      return 0;
+    }
   };
 
   return (
     <View>
       <Text style={styles.title}>Carrinho</Text>
-      {imageArray && (
+      {cartItems.length > 0 && (
         <ScrollView horizontal contentContainerStyle={styles.container}>
-          {imageArray.map((image, index) => (
+          {cartItems.map((item, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => handleDelete(index)}
+              onPress={() => deleteItem(index)}
               style={styles.itemContainer}
             >
-              <Image source={image} style={styles.image} />
-              <Text style={styles.textMoney}>{dinheiroArray[index]}R$</Text>
+              <Image source={item.image} style={styles.image} />
+              <Text style={styles.textMoney}>{item.dinheiro}R$</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
       )}
-      <Text style={styles.totalText}>Total: {totalDinheiro}R$</Text>
+      <Text style={styles.totalText}>Total: {calculateTotal()}R$</Text>
       <TouchableOpacity style={styles.btnComprar}>
         <Text style={styles.btnComprarText}>
           Comprar
@@ -49,7 +67,6 @@ const Carrinho = ({ route }) => {
     </View>
   );
 };
-
 export default Carrinho;
 
 const styles = StyleSheet.create({

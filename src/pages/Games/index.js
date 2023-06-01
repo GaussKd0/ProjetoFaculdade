@@ -55,7 +55,31 @@ const Games = (props) => {
       await AsyncStorage.setItem('imageArray', JSON.stringify(newArray));
       await AsyncStorage.setItem('dinheiroArray', JSON.stringify(newDinheiroArray));
 
-      navigation.navigate('Carrinho', { imageArray: newArray, dinheiroArray: newDinheiroArray }); // Navega para a outra tela após salvar os dados
+      navigation.navigate('Carrinho', { imageArray: newArray, dinheiroArray: newDinheiroArray }); 
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+    }
+  };
+
+  const CarregaDados = async () => {
+    try {
+      const imageArray = await AsyncStorage.getItem('imageArray');
+      let dinheiroArray = await AsyncStorage.getItem('dinheiroArray');
+      let newArray = [];
+      let newDinheiroArray = [];
+
+      if (imageArray !== null) {
+        newArray = JSON.parse(imageArray);
+      }
+
+      if (dinheiroArray !== null) {
+        newDinheiroArray = JSON.parse(dinheiroArray);
+      }
+
+      await AsyncStorage.setItem('imageArray', JSON.stringify(newArray));
+      await AsyncStorage.setItem('dinheiroArray', JSON.stringify(newDinheiroArray));
+
+      navigation.navigate('Carrinho', { imageArray: newArray, dinheiroArray: newDinheiroArray }); 
     } catch (error) {
       console.error('Erro ao salvar os dados:', error);
     }
@@ -69,7 +93,7 @@ const Games = (props) => {
     <View style={styles.container}>
       <Animatable.View animation="fadeInLeft" delay={500}>
         <View style={styles.form}>
-          <TouchableOpacity onPress={() => props.navigation.navigate("Carrinho", { value })}>
+          <TouchableOpacity onPress={CarregaDados}>
             <Icon style={styles.icon2} name={"shopping-cart"} color={"#FFF"} size={20} />
           </TouchableOpacity>
 
@@ -79,10 +103,11 @@ const Games = (props) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.buttonDollar} onPress={() => navigation.navigate('Creditos')}>
+        <TouchableOpacity style={styles.buttonDollar} onPress={() => navigation.navigate("Creditos")}>
           <Text style={styles.textDollar}>{money}$</Text>
         </TouchableOpacity>
       </Animatable.View>
+      
 
       <Animatable.View animation="fadeInUp" delay={1000} style={styles.gamesForms}>
         <Text style={styles.title}>{props.route.params.title}</Text>

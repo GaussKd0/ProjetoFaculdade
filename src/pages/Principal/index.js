@@ -53,19 +53,50 @@ const Principal = (props) =>{
         setGamesDestaques(returnGamesDestaques.gamesDestaques);
         setTitleDestaques(returnGamesDestaques.title);
 
-        const getUserName = async () => {
-            try {
-              const value = await AsyncStorage.getItem('username');
-              if (value !== null) {
-                setUsername(value);
-              }
-            } catch (error) {
-              console.log('Erro ao obter o nome de usuário:', error);
-            }
-          };
       
-          getUserName(); 
-    }, [])
+    const getUserName = async () => {
+        try {
+        const value = await AsyncStorage.getItem('username');
+        if (value !== null) {
+            setUsername(value);
+        }
+        } catch (error) {
+            console.log('Erro ao obter o nome de usuário:', error);
+        }
+    };
+
+    getUserName();
+
+    if (props.route.params && props.route.params.onEditProfile) {
+        props.route.params.onEditProfile(username);
+    }
+    }, [props.route.params]);
+        
+    
+    const salvarDados = async () => {
+        try {
+          const imageArray = await AsyncStorage.getItem('imageArray');
+          let dinheiroArray = await AsyncStorage.getItem('dinheiroArray');
+          let newArray = [];
+          let newDinheiroArray = [];
+    
+          if (imageArray !== null) {
+            newArray = JSON.parse(imageArray);
+          }
+    
+          if (dinheiroArray !== null) {
+            newDinheiroArray = JSON.parse(dinheiroArray);
+          }
+
+    
+          await AsyncStorage.setItem('imageArray', JSON.stringify(newArray));
+          await AsyncStorage.setItem('dinheiroArray', JSON.stringify(newDinheiroArray));
+    
+          navigation.navigate('Carrinho', { imageArray: newArray, dinheiroArray: newDinheiroArray }); 
+        } catch (error) {
+          console.error('Erro ao salvar os dados:', error);
+        }
+      };
        
     const Item = ( {title, image, value, description}) => (
     
@@ -93,7 +124,7 @@ const Principal = (props) =>{
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={500}>
                 <View style={styles.form}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("Carrinho",{username})}>
+                    <TouchableOpacity onPress={salvarDados}>
                         <Icon style={styles.icon2} name={"shopping-cart"} color={"#FFF"} size={20}/>
                     </TouchableOpacity>
 

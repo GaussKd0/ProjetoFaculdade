@@ -8,8 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 
-const Profile = () =>{
-    const [icon, setIcon] = useState('')
+const Profile = () => {
+    const [icon, setIcon] = useState('');
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const navigation = useNavigation();
@@ -17,89 +17,90 @@ const Profile = () =>{
     const handleInputChange = (text) => {
       setInputValue(text);
     };
-    const handleButtonClick = () => {
-        setIsInputVisible(true);
-      };
-    
-
-    const [username, setUsername] = useState('');
-
-
-    useEffect(() => {
-        const returnCarregaPrincipal = CarregaPrincipal();
-        setIcon(returnCarregaPrincipal.icon);
-
-        const getUserName = async () => {
-            try {
-              const value = await AsyncStorage.getItem('username');
-              if (value !== null) {
-                setUsername(value);
-              }
-            } catch (error) {
-              console.log('Erro ao obter o nome de usuário:', error);
-            }
-          };
-      
-          getUserName(); 
-    }, [])
-
   
-    const editItem = async () => {
+    const handleButtonClick = () => {
+      setIsInputVisible(true);
+    };
+  
+    const [username, setUsername] = useState('');
+  
+    useEffect(() => {
+      const returnCarregaPrincipal = CarregaPrincipal();
+      setIcon(returnCarregaPrincipal.icon);
+  
+      const getUserName = async () => {
         try {
           const value = await AsyncStorage.getItem('username');
           if (value !== null) {
-            
+            setUsername(value);
+          }
+        } catch (error) {
+          console.log('Erro ao obter o nome de usuário:', error);
+        }
+      };
+  
+      getUserName();
+    }, []);
+  
+    const editItem = async () => {
+      try {
+        if (inputValue !== '') {
+          const value = await AsyncStorage.getItem('username');
+          if (value !== null) {
             const novoValor = inputValue;
     
             await AsyncStorage.setItem('username', novoValor);
             console.log('Item editado com sucesso!');
-            navigation.goBack();
-
+            navigation.navigate('Principal', { onEditProfile: setUsername });
           } else {
             console.log('O item não existe no armazenamento local.');
           }
-        } catch (error) {
-          console.log('Erro ao editar o item:', error);
+        } else {
+          console.log('Nenhum valor digitado.');
         }
-      };
-
-
-    return(
-        <View>
-            <Animatable.View animation="fadeInLeft" delay={200} style={styles.form}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Icon name="arrow-back" size={50} style={styles.arrow}/>
-                </TouchableOpacity>
-                <Text style={styles.title}>Edit Profile</Text>
-            </Animatable.View>
-
-            <Animatable.View animation="fadeInUp" delay={500}>
-                <TouchableOpacity>   
-                    <Image source={icon} style={styles.image}/>
-                </TouchableOpacity>
-
-                <View style={{flexDirection: 'row', alignSelf: "center"}}>
-                    <Text style={styles.text}>{username}</Text>
-                    <TouchableOpacity onPress={handleButtonClick}>
-                        <Icon name="edit" size={18} style={styles.icon}/>
-                    </TouchableOpacity>
-                </View>
-
-                {isInputVisible && (
-                <TextInput style={styles.input}
-                    value={inputValue}
-                    onChangeText={handleInputChange}
-                    placeholder="Digite algo"
-                />)}
-
-
-                <TouchableOpacity onPress={editItem} style={styles.buttonConfirm}>
-                    <Text style={styles.buttonConfirmText}>Confirmar</Text>
-                </TouchableOpacity>
-            </Animatable.View>
-        </View>
-    )
-}
+      } catch (error) {
+        console.log('Erro ao editar o item:', error);
+      }
+    };
+    
+  
+    return (
+      <View>
+        <Animatable.View animation="fadeInLeft" delay={200} style={styles.form}>
+          <TouchableOpacity onPress={() => navigation.navigate("Principal")}>
+            <Icon name="arrow-back" size={50} style={styles.arrow} />
+          </TouchableOpacity>
+          <Text style={styles.title}>Edit Profile</Text>
+        </Animatable.View>
+  
+        <Animatable.View animation="fadeInUp" delay={500}>
+          <TouchableOpacity>
+            <Image source={icon} style={styles.image} />
+          </TouchableOpacity>
+  
+          <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+            <Text style={styles.text}>{username}</Text>
+            <TouchableOpacity onPress={handleButtonClick}>
+              <Icon name="edit" size={18} style={styles.icon} />
+            </TouchableOpacity>
+          </View>
+  
+          {isInputVisible && (
+            <TextInput
+              style={styles.input}
+              value={inputValue}
+              onChangeText={handleInputChange}
+              placeholder="Digite algo"
+            />
+          )}
+  
+          <TouchableOpacity onPress={editItem} style={styles.buttonConfirm}>
+            <Text style={styles.buttonConfirmText}>Confirmar</Text>
+          </TouchableOpacity>
+        </Animatable.View>
+      </View>
+    );
+  };
 
 const styles = StyleSheet.create({
     form:{
