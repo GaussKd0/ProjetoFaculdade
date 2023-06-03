@@ -5,7 +5,8 @@
 
 Esse app possui todos os requisitos pedido em aula e durante o semestre possuindo: 8 telas com: icones, text, view, input, flatlist, touchableopacity.
 ele pode : adicionar, editar e deletar, sendo a função de editar o username que está salvo no local storage,
-sendo os requisitos de telas apenas 2
+sendo os requisitos de telas apenas 2 e acabei utilizando algumas bibliotecas que não foram requisitadas, por exemplo para substituir o local storage que só existe em navegadores 
+usei o async local storaga e utilizei o animatable 
 
 
 
