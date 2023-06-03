@@ -15,3 +15,16 @@ ele pode : adicionar, editar e deletar, sendo a função de editar o username qu
 ![Registro](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/3.png)
 
 ![Principal](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/4.png)
+
+![PrincipalExtensao](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/5.png)
+
+![Creditos](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/6.png)
+
+![EditProfile](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/7.png)
+
+![EditProfile2](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/8.png)
+
+![Games](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/9.png)
+
+![Carrinho](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/10.png)
+
