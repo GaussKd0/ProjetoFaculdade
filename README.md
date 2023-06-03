@@ -9,3 +9,9 @@ ele pode : adicionar, editar e deletar, sendo a função de editar o username qu
 
 
 ![BemVindo](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/1.png)
+
+![Login](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/2.png)
+
+![Registro](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/3.png)
+
+![Principal](https://github.com/GaussKd0/ProjetoFaculdadeReactNative/blob/main/src/assets/GitImage/4.png)
