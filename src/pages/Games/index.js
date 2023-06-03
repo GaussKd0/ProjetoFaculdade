@@ -115,8 +115,7 @@ const Games = (props) => {
         <Text style={styles.description}>{props.route.params.description}</Text>
         <View>
           <TouchableOpacity style={styles.buttonBuy} onPress={salvarDados}>
-            <Text style={styles.buttonBuyText}>Adicionar</Text>
-            <Text style={styles.value}> {props.route.params.value}R$</Text>
+            <Text style={styles.buttonBuyText}>Adicionar <Text style={styles.value}>{props.route.params.value}R$</Text></Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
@@ -177,6 +176,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         position: "absolute",
         alignSelf: "flex-end",
+
         marginTop:  20,
         
     },
@@ -215,20 +215,24 @@ const styles = StyleSheet.create({
         marginLeft: 90,
         color: "#fff",
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        
     },
     buttonBuy:{
-        width: "42%",
+        width: "60%",
         padding: 10,
         marginTop: 20,
         alignSelf: "center",
         backgroundColor: "#000",
-        borderRadius: 8
+        borderRadius: 8,
+        
     },
     buttonBuyText:{
         fontSize: 18,
         color: "#fff",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        alignSelf: "center",
+       
     }
 })
 

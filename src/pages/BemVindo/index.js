@@ -20,7 +20,7 @@ const BemVindo = () =>{
        setText(retorno.text);
        setButtonText(retorno.buttonText);
 
-       console.log(retorno);
+       
         
     }, [])
 

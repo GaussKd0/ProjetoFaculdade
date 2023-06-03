@@ -67,6 +67,7 @@ const Carrinho = ({ route, navigation }) => {
     </View>
   );
 };
+
 export default Carrinho;
 
 const styles = StyleSheet.create({

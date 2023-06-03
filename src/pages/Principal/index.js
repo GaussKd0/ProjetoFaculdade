@@ -87,8 +87,7 @@ const Principal = (props) =>{
           if (dinheiroArray !== null) {
             newDinheiroArray = JSON.parse(dinheiroArray);
           }
-
-    
+          
           await AsyncStorage.setItem('imageArray', JSON.stringify(newArray));
           await AsyncStorage.setItem('dinheiroArray', JSON.stringify(newDinheiroArray));
     
